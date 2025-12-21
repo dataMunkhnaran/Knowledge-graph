@@ -1,0 +1,178 @@
+import re
+import pandas as pd
+from pathlib import Path
+import pandas as pd
+import numpy as np   
+
+MOVIES_PATH = Path(r"C:\Users\Muna\OneDrive\Бичиг баримтууд\2025_autumn\Knowledge graph\Project\movies_clean.xlsx")
+ACTORS_PATH = Path(r"C:\Users\Muna\OneDrive\Бичиг баримтууд\2025_autumn\Knowledge graph\Project\actors_clean.xlsx")
+
+OUT_MOVIES_CLEAN = Path(r"C:\Users\Muna\OneDrive\Бичиг баримтууд\2025_autumn\Knowledge graph\Project\movies_clean.xlsx")
+OUT_ACTORS_CLEAN = Path(r"C:\Users\Muna\OneDrive\Бичиг баримтууд\2025_autumn\Knowledge graph\Project\actors_clean.xlsx")
+
+def pick_col(df: pd.DataFrame, candidates):
+    """
+    Excel дээр баганын нэр өөр байж болох тул
+    candidates жагсаалтаас таарах баганыг автоматаар олно.
+    """
+    cols_lower = {c.lower(): c for c in df.columns}
+    # 1) Яг таарах нэр хайна
+    for cand in candidates:
+        if cand.lower() in cols_lower:
+            return cols_lower[cand.lower()]
+    # 2) Дутуу таарах (агуулсан) нэр хайна
+    for cand in candidates:
+        for c in df.columns:
+            if cand.lower() in c.lower():
+                return c
+    raise KeyError(f"Багана олдсонгүй: {candidates}. Одоо байгаа баганууд: {list(df.columns)}")
+
+
+def norm_text(x) -> str:
+    """
+    Ерөнхий текст цэвэрлэгээ:
+    - илүү зай, таб, NBSP-ийг жигдлэх
+    - эхлэл/төгсгөл зайг авч цэгцлэх
+    """
+    if x is None or (isinstance(x, float) and pd.isna(x)):
+        return ""
+    s = str(x).strip()
+    s = re.sub(r"[\u00A0\t]+", " ", s)   # NBSP, tab -> space
+    s = re.sub(r"\s+", " ", s).strip()   # олон зай -> нэг зай
+    return s
+
+
+def norm_name(x) -> str:
+    """
+    Нэр нормчлох (matching болон давхардал шалгахад):
+    - жижиг үсэг
+    - цэг, таслал, хаалт зэрэг тэмдэгтүүдийг цэвэрлэх
+    - зайг жигдлэх
+    """
+    s = norm_text(x).lower()
+    s = re.sub(r"[\"'`´“”‘’]", "", s)    # ишлэлүүдийг арилгана
+    s = s.replace(".", " ")              # "Б.Цогт" -> "Б Цогт"
+    s = re.sub(r"[,;:()\[\]{}]", " ", s) # тусгаарлагч тэмдэгтүүд
+    s = re.sub(r"\s+", " ", s).strip()
+    return s
+
+
+def to_float(series: pd.Series) -> pd.Series:
+    """
+    Rating зэрэг тоон утгуудыг float болгоно.
+    Жишээ: "7,8" -> 7.8, "7.8" -> 7.8, "7.8/10" -> 7.8
+    """
+    s = series.copy()
+    s = s.where(~s.isna(), np.nan).astype("string")
+    s = s.str.replace(",", ".", regex=False)  # decimal comma -> dot
+
+    # эхний тоог regex-ээр сугалж авна
+    extracted = s.str.extract(r"([-+]?\d*\.?\d+)")[0]
+    return pd.to_numeric(extracted, errors="coerce")
+
+
+def safe_int(series: pd.Series) -> pd.Series:
+    """
+    Release year зэрэг бүхэл тоог nullable Int64 болгож хувиргана.
+    (NaN-г хадгалж чадна)
+    """
+    x = pd.to_numeric(series, errors="coerce")
+    x = np.rint(x)  # 2001.0 -> 2001 гэх мэтээр дугуйлна
+    return pd.Series(x).astype("Int64")
+
+
+def parse_runtime_to_minutes(x):
+    """
+    Runtime-г минут болгох:
+    - "102", "102 мин" -> 102
+    - "1ц 40м", "1 цаг 40 минут" -> 100
+    - болохгүй бол pd.NA (NULL)
+    """
+    if x is None or (isinstance(x, float) and pd.isna(x)):
+        return pd.NA
+
+    s = str(x).strip().lower()
+    if not s or s in {"nan", "null", "-"}:
+        return pd.NA
+
+    # normalize
+    s = s.replace(",", ".")
+    s = re.sub(r"\s+", " ", s)
+
+    # "1 цаг 40 минут" эсвэл "1ц 40м" хэлбэрийн цаг+мин байгаа эсэхийг шалгана
+    h = re.search(r"(\d+)\s*(цаг|ц|h|hour)", s)
+    m = re.search(r"(\d+)\s*(минут|мин|м|min|minute)", s)
+    if h and m:
+        return int(h.group(1)) * 60 + int(m.group(1))
+
+    # "1ц 40м" шиг үггүй хэлбэрийг барих (ц, м тэмдэгтэй)
+    h2 = re.search(r"(\d+)\s*ц", s)
+    m2 = re.search(r"(\d+)\s*м", s)
+    if h2 and m2:
+        return int(h2.group(1)) * 60 + int(m2.group(1))
+
+    # бусад тохиолдолд эхний тоог минут гэж үзнэ
+    num = re.search(r"(\d+(\.\d+)?)", s)
+    if not num:
+        return pd.NA
+    return int(round(float(num.group(1))))
+
+movies = pd.read_excel(MOVIES_PATH)
+actors = pd.read_excel(ACTORS_PATH)
+
+title_col   = pick_col(movies, ["Movie Name", "Title", "name", "movie_name"])
+year_col    = pick_col(movies, ["Release Year", "Year", "release_year"])
+rating_col  = pick_col(movies, ["Kinosan Rating", "Rating", "rating"])
+runtime_col = pick_col(movies, ["runtime_minutes", "Runtime", "runtime"])
+
+director_col = pick_col(movies, ["Найруулагч", "Director", "director"])
+company_col  = pick_col(movies, ["Продакшн", "Production Company", "Production", "company"])
+
+actor_name_col = pick_col(actors, ["Овог нэр", "Name", "Full Name", "actor_name"])
+
+
+movies_clean = movies.copy()
+
+# 4.1 Киноны нэр цэвэрлэх + нормчилсон түлхүүр үүсгэх (давхардал шалгахад ашиглана)
+movies_clean[title_col] = movies_clean[title_col].map(norm_text)
+movies_clean["title_norm"] = movies_clean[title_col].map(norm_name)
+
+# 4.2 Release year стандарчлах (integer)
+movies_clean["release_year"] = safe_int(movies_clean[year_col])
+
+# 4.3 Rating стандарчлах (float)
+movies_clean["rating"] = to_float(movies_clean[rating_col])
+
+# 4.4 Runtime стандарчлах (integer minutes)
+movies_clean["runtime_minutes"] = movies_clean[runtime_col].map(parse_runtime_to_minutes).astype("Int64")
+
+# 4.5 Найруулагч / компани текст цэвэрлэх + нормчилсон хувилбар гаргах
+movies_clean["director_name"] = movies_clean[director_col].map(norm_text)
+movies_clean["director_norm"] = movies_clean["director_name"].map(norm_name)
+
+movies_clean["company_name"] = movies_clean[company_col].map(norm_text)
+movies_clean["company_norm"] = movies_clean["company_name"].map(norm_name)
+
+# 4.6 Missing values-ийг NULL болгох (pd.NA)
+for col in ["release_year", "rating", "runtime_minutes", "director_name", "company_name"]:
+    movies_clean[col] = movies_clean[col].replace({"": pd.NA, "nan": pd.NA, "NaN": pd.NA})
+
+# 4.7 Давхардал арилгах (title_norm + release_year)
+#     Ижил нэртэй, ижил жилтэй кинонууд нэг гэж үзнэ (best effort)
+movies_clean = movies_clean.drop_duplicates(subset=["title_norm", "release_year"], keep="first").reset_index(drop=True)
+
+
+actors_clean = actors.copy()
+
+# 5.1 Нэр цэвэрлэх + нормчилсон түлхүүр үүсгэх
+actors_clean["actor_name"] = actors_clean[actor_name_col].map(norm_text)
+actors_clean["actor_name_norm"] = actors_clean["actor_name"].map(norm_name)
+
+# 5.2 Missing values-ийг NULL болгох
+actors_clean["actor_name"] = actors_clean["actor_name"].replace({"": pd.NA, "nan": pd.NA, "NaN": pd.NA})
+
+# 5.3 Давхардал арилгах (нормчилсон нэрээр)
+actors_clean = actors_clean.drop_duplicates(subset=["actor_name_norm"], keep="first").reset_index(drop=True)
+
+movies_clean.to_excel(OUT_MOVIES_CLEAN, index=False)
+actors_clean.to_excel(OUT_ACTORS_CLEAN, index=False)
