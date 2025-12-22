@@ -1,0 +1,288 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19/"
+     xml:base="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19/"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:untitled-ontology-19="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#">
+    <owl:Ontology rdf:about="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#actedIn -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#actedIn">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#hasActor"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#Actor"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#Movie"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#directedBy -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#directedBy">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#Movie"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#Director"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#hasActor -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#hasActor">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#Movie"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#Actor"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#producedBy -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#producedBy">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#Movie"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#ProductionCompany"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#hasBirthDate -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#hasBirthDate">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#Actor"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#hasID -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#hasID">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#Movie"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#hasName -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#hasName">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#Actor"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#hasProfession -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#hasProfession">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#Actor"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#hasRating -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#hasRating">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#Movie"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#hasReleaseYear -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#hasReleaseYear">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#Movie"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#hasRuntimeMinutes -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#hasRuntimeMinutes">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#Movie"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#hasTitle -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#hasTitle">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topDataProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#Movie"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#Actor -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#Actor">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#Person"/>
+        <owl:disjointWith rdf:resource="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#Director"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#CreativeWork -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#CreativeWork"/>
+    
+
+
+    <!-- http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#Director -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#Director">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#Person"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#Movie -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#Movie">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#CreativeWork"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#Person -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#Person"/>
+    
+
+
+    <!-- http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#ProductionCompany -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#ProductionCompany"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#Оранж_энтертэйнмент -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#Оранж_энтертэйнмент">
+        <rdf:type rdf:resource="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#ProductionCompany"/>
+        <untitled-ontology-19:hasName>Оранж энтертэйнмент</untitled-ontology-19:hasName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#П.Надалсүрэн -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#П.Надалсүрэн">
+        <rdf:type rdf:resource="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#Director"/>
+        <untitled-ontology-19:hasName>П.Надалсүрэн</untitled-ontology-19:hasName>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#Сумъяадорж -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#Сумъяадорж">
+        <rdf:type rdf:resource="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#Actor"/>
+        <untitled-ontology-19:actedIn rdf:resource="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#Өв_залгамжлагч"/>
+        <untitled-ontology-19:hasBirthDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTimeStamp">1999-07-05</untitled-ontology-19:hasBirthDate>
+        <untitled-ontology-19:hasName>Сумъяадорж</untitled-ontology-19:hasName>
+        <untitled-ontology-19:hasProfession>Жүжигчин</untitled-ontology-19:hasProfession>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#Өв_залгамжлагч -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#Өв_залгамжлагч">
+        <rdf:type rdf:resource="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#Movie"/>
+        <untitled-ontology-19:directedBy rdf:resource="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#П.Надалсүрэн"/>
+        <untitled-ontology-19:hasActor rdf:resource="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#Сумъяадорж"/>
+        <untitled-ontology-19:producedBy rdf:resource="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#Оранж_энтертэйнмент"/>
+        <untitled-ontology-19:hasRating rdf:datatype="http://www.w3.org/2001/XMLSchema#float">6.0</untitled-ontology-19:hasRating>
+        <untitled-ontology-19:hasReleaseYear rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2024</untitled-ontology-19:hasReleaseYear>
+        <untitled-ontology-19:hasRuntimeMinutes rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">60</untitled-ontology-19:hasRuntimeMinutes>
+        <untitled-ontology-19:hasTitle>Өв залгамжлагч</untitled-ontology-19:hasTitle>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // General axioms
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#CreativeWork"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#Person"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/muna/ontologies/2025/11/untitled-ontology-19#ProductionCompany"/>
+        </owl:members>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi -->
+
